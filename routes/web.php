@@ -77,7 +77,7 @@ Route::group(['prefix' => 'admin'], function () {
 			Route::post('/updatesubcategory', 'AdminCategoriesController@updatesubcategory');
 			Route::get('/deletesubcategory/{id}', 'AdminCategoriesController@deletesubcategory');
 			
-			Route::post('/getajaxcategories', 'AdminCategoriesController@getajaxcategories');
+			Route::post('/getajaxcategories',  ['as' => 'getajaxcategories', 'uses' => 'AdminCategoriesController@getajaxcategories']);
 
 			//products
 			Route::get('/products', 'AdminProductsController@products');
