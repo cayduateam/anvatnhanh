@@ -5,7 +5,7 @@
 
 
 <!-- meta contains meta taga, css and fontawesome icons etc -->
-
+<base href="{{asset('')}}">
 @include('common.meta')
 <link rel="apple-touch-icon" sizes="57x57" href="{{asset('').'public/images/favicon/apple-icon-57x57.png'}}">
 <link rel="apple-touch-icon" sizes="60x60" href="{{asset('').'public/images/favicon/apple-icon-60x60.png'}}">
