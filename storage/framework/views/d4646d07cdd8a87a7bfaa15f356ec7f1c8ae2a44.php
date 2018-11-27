@@ -5,7 +5,7 @@
 
 
 <!-- meta contains meta taga, css and fontawesome icons etc -->
-
+<base href="<?php echo e(asset('')); ?>">
 <?php echo $__env->make('common.meta', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <link rel="apple-touch-icon" sizes="57x57" href="<?php echo e(asset('').'public/images/favicon/apple-icon-57x57.png'); ?>">
 <link rel="apple-touch-icon" sizes="60x60" href="<?php echo e(asset('').'public/images/favicon/apple-icon-60x60.png'); ?>">
