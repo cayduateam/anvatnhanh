@@ -1422,7 +1422,7 @@ function getSubCategory() {
 	 	var getCategories =	'{{ URL::to("admin/getajaxcategories")}}';
 	 
 	@else*/
-		var getCategories = '{{ route("/getajaxcategories") }}'.replace('http:','https:');
+		var getCategories = '{{ route("getajaxcategories") }}'.replace('http:','https:');
 		// url: '{!! route('productPaChange') !!}'.replace('http:','https:'),
 	/*@endif*/
 	
