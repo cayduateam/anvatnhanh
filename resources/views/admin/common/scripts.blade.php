@@ -1423,7 +1423,7 @@ function getSubCategory() {
 	 
 	@else*/
 		var getCategories = '{!! route("getajaxcategories") !!}'.replace('http:','https:');
-		// url: '{!! route('productPaChange') !!}'.replace('http:','https:'),
+		
 	/*@endif*/
 	
 	var category_id = $('#category_id').val();
