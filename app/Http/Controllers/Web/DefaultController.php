@@ -47,7 +47,7 @@ class DefaultController extends DataController
 	
 	//setStyle
 	public function setStyle(Request $request){
-		session(['homeStyle' => $request->style])	
+		session(['homeStyle' => $request->style]);
 		return redirect('/');
 	}
 	
