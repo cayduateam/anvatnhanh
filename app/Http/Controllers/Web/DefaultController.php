@@ -47,13 +47,13 @@ class DefaultController extends DataController
 	
 	//setStyle
 	public function setStyle(Request $request){
-		session(['homeStyle' => $request->style]);		
+		session(['homeStyle' => $request->style])	
 		return redirect('/');
 	}
 	
 	//
 	public function settheme(Request $request){		
-		session(['theme' => $request->theme]);		
+		session(['theme' => $request->theme]);
 		return redirect('/');
 	}
 	
@@ -171,7 +171,9 @@ class DefaultController extends DataController
 				$detail[] = $single_product['product_data'][0];
 			}
 		}
-		
+		//set default homestyle (header style)
+		session(['homeStyle' => 'two']);
+
 		$result['weeklySoldProducts'] = array('success'=>'1', 'product_data'=>$detail,  'message'=>"Returned all products.", 'total_record'=>count($detail));
 		return view("index", $title)->with('result', $result); 
 		

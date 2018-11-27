@@ -56,18 +56,6 @@
             @endif                 
        
         @else
-          @include('common.header_two')
-            @if(Request::path() == 'index' or Request::path() == '/')
-            <section class="carousel-content">
-              <div class="container">
-                <div class="row">
-                  <div class="col-12 col-lg-9 p-0"> @include('common.carousel') </div>
-                  <div class="col-12 col-lg-3 p-0"> @include('common.offers') </div>
-                </div>
-              </div>
-            </section>
-            @endif
-<!-- 
        		@include('common.header')
             @if(Request::path() == 'index' or Request::path() == '/')
             <section class="carousel-content">
@@ -78,7 +66,7 @@
                 </div>
               </div>
             </section>
-            @endif -->
+            @endif
         @endif
 	<!-- ./end of header -->
         
