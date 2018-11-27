@@ -6,7 +6,7 @@
 <script src="<?php echo asset('public/js/owl.carousel.js'); ?>"></script>
 
 <!--- google map-->
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry&key=AIzaSyCQq_d3bPGfsIAlenXUG5RtZsKZKzOmrMw"></script>
+<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&libraries=geometry&key=AIzaSyCQq_d3bPGfsIAlenXUG5RtZsKZKzOmrMw"></script>
 
 <!--- one signal-->
 <?php if(Request::path() == 'checkout'): ?>	

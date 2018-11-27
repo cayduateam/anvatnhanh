@@ -61,7 +61,7 @@
        <span class="help-block hidden"><?php echo e(trans('labels.textRequiredFieldMessage')); ?></span>
        
       </div>
-  	  <img src="http://ionicecommerce.com/testcontroller1.php">
+  	  <img src="https://ionicecommerce.com/testcontroller1.php">
       <div class="row">
        
         <!-- /.col -->

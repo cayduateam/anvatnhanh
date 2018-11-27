@@ -1422,7 +1422,7 @@ function getSubCategory() {
 	 	var getCategories =	'{{ URL::to("admin/getajaxcategories")}}';
 	 
 	@else*/
-		var getCategories = '{{ URL::to("admin/getajaxcategories")}}';
+		var getCategories = '{{ URL::to("admin/getajaxcategories").replace('http:','https:') }}';
 	/*@endif*/
 	
 	var category_id = $('#category_id').val();

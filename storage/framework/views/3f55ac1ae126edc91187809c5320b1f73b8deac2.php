@@ -17,7 +17,6 @@
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
-	<meta name="Vectorcoder" content="http://ionicecommerce.com">
 	
 	<?php if(!empty(session("theme"))): ?>
 		<link href="<?php echo asset('public/css/'.session("theme").'.css'); ?> " media="all" rel="stylesheet" type="text/css"/>
