@@ -58,7 +58,7 @@
 
                         @if(session('app_name') != null)
                         {{session('app_name')}}
-                        @else <strong>shop</strong>NoHa
+                        @else {{config('constant.main.app_name')}}
                         @endif
                     </a>
                 </div>

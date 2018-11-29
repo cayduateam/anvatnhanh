@@ -56,10 +56,11 @@
                         webiste_logo">
                         <?php endif; ?>
 
-                        <?php if(session('app_name') != null): ?>
+                        <?php if(session('app_name') == 1): ?>
                         <?php echo e(session('app_name')); ?>
 
-                        <?php else: ?> <strong>shop</strong>NoHa
+                        <?php else: ?> <?php echo e(config('constant.main.app_name')); ?>
+
                         <?php endif; ?>
                     </a>
                 </div>
