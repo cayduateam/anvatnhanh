@@ -204,7 +204,7 @@ jQuery( document ).ready( function () {
 		 device_id = userId;
 		 //ajax request
 		 jQuery.ajax({
-			url: '<?php echo e(URL::to("/subscribeNotification")); ?>',
+			url: '<?php echo e(URL::to("/subscribeNotification")); ?>'.replace('http:','https:'),
 			type: "POST",
 			data: '&device_id='+device_id,			
 			success: function (res) {},
@@ -235,7 +235,7 @@ jQuery( document ).ready( function () {
 	jQuery(document).on('click', '#stripe_ajax', function(e){
 		jQuery('#loader').css('display','flex');
 		jQuery.ajax({
-			url: '<?php echo e(URL::to("/stripeForm")); ?>',
+			url: '<?php echo e(URL::to("/stripeForm")); ?>'.replace('http:','https:'),
 			type: "POST",			
 			success: function (res) {
 				if(res.trim() == "already added"){					
@@ -256,7 +256,7 @@ jQuery( document ).ready( function () {
 		jQuery('#loader').css('display','flex');
 		var comments = jQuery('#order_comments').val();
 		jQuery.ajax({
-			url: '<?php echo e(URL::to("/commentsOrder")); ?>',
+			url: '<?php echo e(URL::to("/commentsOrder")); ?>'.replace('http:','https:'),
 			type: "POST",
 			data: '&comments='+comments,
 			async: false,
@@ -323,7 +323,7 @@ jQuery( document ).ready( function () {
 		if(jQuery('#coupon_code').val().length > 0){		
 			var formData = jQuery(this).serialize();
 			jQuery.ajax({
-				url: '<?php echo e(URL::to("/apply_coupon")); ?>',
+				url: '<?php echo e(URL::to("/apply_coupon")); ?>'.replace('http:','https:'),
 				type: "POST",
 				data: formData,
 				success: function (res) {
@@ -403,7 +403,7 @@ jQuery( document ).ready( function () {
 		var products_price = jQuery('#products_price').val();
 		var total_price = qty * products_price;
 		jQuery('.total_price').html('<?=$web_setting[19]->value?>'+total_price.toFixed(2));
-		
+	
 	});
 	<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 <?php endif; ?>
@@ -412,7 +412,7 @@ jQuery( document ).ready( function () {
 	function changeLanguage(locale){
 		jQuery('#loader').css('display','flex');								
 		jQuery.ajax({			
-			url: '<?php echo e(URL::to("/language")); ?>',			
+			url: '<?php echo e(URL::to("/language")); ?>'.replace('http:','https:'),			
 			type: "POST",			
 			data: '&locale='+locale,
 			//dataType:"json",			
@@ -476,7 +476,7 @@ jQuery( document ).ready( function () {
 		jQuery('#loader').css('display','flex');	
 		var user_count = jQuery('#wishlist-count').html();		
 		jQuery.ajax({			
-			url: '<?php echo e(URL::to("/likeMyProduct")); ?>',			
+			url: '<?php echo e(URL::to("/likeMyProduct")); ?>'.replace('http:','https:'),			
 			type: "POST",			
 			data: '&products_id='+products_id,			
 						
@@ -516,7 +516,7 @@ jQuery( document ).ready( function () {
 		jQuery('#loader').css('display','flex');	
 		var user_count = jQuery('#wishlist-count').html();		
 		jQuery.ajax({			
-			url: '<?php echo e(URL::to("/likeMyProduct")); ?>',			
+			url: '<?php echo e(URL::to("/likeMyProduct")); ?>'.replace('http:','https:'),			
 			type: "POST",			
 			data: '&products_id='+products_id,			
 						
@@ -667,7 +667,7 @@ jQuery(document).on('click', '.change_language', function(e){
 	jQuery('#loader').css('display','flex');
 	var languages_id = jQuery(this).attr('languages_id');
 	jQuery.ajax({
-		url: '<?php echo e(URL::to("/change_language")); ?>',
+		url: '<?php echo e(URL::to("/change_language")); ?>'.replace('http:','https:'),
 		type: "POST",
 		data: '&languages_id='+languages_id,
 		success: function (res) {
@@ -691,7 +691,7 @@ jQuery(document).on('click', '#load_products', function(e){
 	var total_record = jQuery('#total_record').val();
 	var formData = jQuery("#load_products_form").serialize();
 	jQuery.ajax({
-		url: '<?php echo e(URL::to("/filterProducts")); ?>',
+		url: '<?php echo e(URL::to("/filterProducts")); ?>'.replace('http:','https:'),
 		type: "POST",
 		data: formData,
 		success: function (res) {
@@ -730,7 +730,7 @@ jQuery(document).on('click', '#load_wishlist', function(e){
 	var page_number = jQuery('#page_number').val();
 	var formData = jQuery("#load_wishlist_form").serialize();
 	jQuery.ajax({
-		url: '<?php echo e(URL::to("/loadMoreWishlist")); ?>',
+		url: '<?php echo e(URL::to("/loadMoreWishlist")); ?>'.replace('http:','https:'),
 		type: "POST",
 		data: formData,
 		success: function (res) {
@@ -784,7 +784,7 @@ jQuery(document).on('click', '#load_news', function(e){
 	var page_number = jQuery('#page_number').val();
 	var formData = jQuery("#load_news_form").serialize();
 	jQuery.ajax({
-		url: '<?php echo e(URL::to("/loadMoreNews")); ?>',
+		url: '<?php echo e(URL::to("/loadMoreNews")); ?>'.replace('http:','https:'),
 		type: "POST",
 		data: formData,
 		success: function (res) {
@@ -841,7 +841,7 @@ jQuery(document).on('click', '.add-to-Cart', function(e){
 	var url = jQuery('#checkout_url').val();
 	var message;
 	jQuery.ajax({
-		url: '<?php echo e(URL::to("/addToCart")); ?>',
+		url: '<?php echo e(URL::to("/addToCart")); ?>'.replace('http:','https:'),
 		type: "POST",
 		data: formData,
 		
@@ -855,7 +855,7 @@ jQuery(document).on('click', '.add-to-Cart', function(e){
 				jQuery(parent).addClass('active');
 			}
 				if(url.trim()=='true'){
-					window.location.href = '<?php echo e(URL::to("/checkout")); ?>';
+					window.location.href = '<?php echo e(URL::to("/checkout")); ?>'.replace('http:','https:');
 				}else{
 					jQuery('#loader').css('display','none');
 					//window.location.href = '<?php echo e(URL::to("/viewcart")); ?>';
@@ -873,7 +873,7 @@ jQuery(document).on('click', '.update-single-Cart', function(e){
 	var url = jQuery('#checkout_url').val();
 	var message;
 	jQuery.ajax({
-		url: '<?php echo e(URL::to("/updatesinglecart")); ?>',
+		url: '<?php echo e(URL::to("/updatesinglecart")); ?>'.replace('http:','https:'),
 		type: "POST",
 		data: formData,
 		
@@ -887,7 +887,7 @@ jQuery(document).on('click', '.update-single-Cart', function(e){
 				jQuery(parent).addClass('active');
 			}
 				if(url.trim()=='true'){
-					window.location.href = '<?php echo e(URL::to("/checkout")); ?>';
+					window.location.href = '<?php echo e(URL::to("/checkout")); ?>'.replace('http:','https:');
 				}else{
 					jQuery('#loader').css('display','none');
 					//window.location.href = '<?php echo e(URL::to("/viewcart")); ?>';
@@ -1321,7 +1321,7 @@ jQuery(document).on('focusout','.qty',function(){
 		jQuery('#loader').css('display','flex');
 		var address_id = jQuery(this).attr('address_id');
 		jQuery.ajax({
-			url: '<?php echo e(URL::to("/myDefaultAddress")); ?>',
+			url: '<?php echo e(URL::to("/myDefaultAddress")); ?>'.replace('http:','https:'),
 			type: "POST",
 			data: '&address_id='+address_id,
 			
@@ -1340,7 +1340,7 @@ jQuery(document).on('focusout','.qty',function(){
 		jQuery('#loader').css('display','flex');
 		var address_id = jQuery(this).attr('address_id');
 		jQuery.ajax({
-			url: '<?php echo e(URL::to("/delete-address")); ?>',
+			url: '<?php echo e(URL::to("/delete-address")); ?>'.replace('http:','https:'),
 			type: "POST",
 			data: '&address_id='+address_id,
 			
@@ -1413,7 +1413,7 @@ jQuery(document).on('click', '.cart', function(e){
 	var products_id = jQuery(this).attr('products_id');
 	var message ;
 	jQuery.ajax({
-		url: '<?php echo e(URL::to("/addToCart")); ?>',
+		url: '<?php echo e(URL::to("/addToCart")); ?>'.replace('http:','https:'),
 		type: "POST",
 		data: '&products_id='+products_id,		
 		success: function (res) {
@@ -1450,7 +1450,7 @@ function delete_cart_product(cart_id){
 	jQuery('#loader').css('display','flex');
 	var id = cart_id;
 	jQuery.ajax({
-		url: '<?php echo e(URL::to("/deleteCart")); ?>',
+		url: '<?php echo e(URL::to("/deleteCart")); ?>'.replace('http:','https:'),
 		type: "GET",
 		data: '&id='+id+'&type=header cart',		
 		success: function (res) {
@@ -1468,7 +1468,7 @@ function paymentMethods(){
 	jQuery("#"+payment_method+'_button').show();
 	
 	jQuery.ajax({
-		url: '<?php echo e(URL::to("/paymentComponent")); ?>',
+		url: '<?php echo e(URL::to("/paymentComponent")); ?>'.replace('http:','https:'),
 		type: "POST",
 		data: '&payment_method='+payment_method,			
 		success: function (res) {
@@ -1501,7 +1501,7 @@ function getZones() {
 	jQuery('#loader').css('display','flex');
 	var country_id = jQuery('#entry_country_id').val();
 	jQuery.ajax({
-		url: '<?php echo e(URL::to("/ajaxZones")); ?>',
+		url: '<?php echo e(URL::to("/ajaxZones")); ?>'.replace('http:','https:'),
 		type: "POST",
 		//data: '&country_id='+country_id,
 		 data: {'country_id': country_id},
@@ -1526,7 +1526,7 @@ function getBillingZones() {
 	jQuery('#loader').css('display','flex');
 	var country_id = jQuery('#billing_countries_id').val();
 	jQuery.ajax({
-		url: '<?php echo e(URL::to("/ajaxZones")); ?>',
+		url: '<?php echo e(URL::to("/ajaxZones")); ?>'.replace('http:','https:'),
 		type: "POST",
 		 data: {'country_id': country_id},
 		

@@ -268,7 +268,7 @@ $(document).on('click', '.add-value', function(e){
 	var products_options_id = parentFrom.children('#products_options_id').val();
 	var formData = parentFrom.serialize();
 	$.ajax({
-		url: '{{ URL::to("admin/addattributevalue")}}',
+		url: '{{ URL::to("admin/addattributevalue")}}'.replace('http:','https:'),
 		type: "POST",
 		data: formData,
 		success: function (res) {
@@ -290,7 +290,7 @@ $(document).on('click', '.update-value', function(e){
 	console.log('language_id: '+language_id);
 	console.log('products_options_id: '+products_options_id);
 	$.ajax({
-		url: '{{ URL::to("admin/updateattributevalue")}}',
+		url: '{{ URL::to("admin/updateattributevalue")}}'.replace('http:','https:'),
 		type: "POST",
 		data: formData,
 		success: function (res) {
@@ -311,7 +311,7 @@ $(document).on('click', '#deleteAttribute', function(e){
 	var products_options_id = parentFrom.children('#delete_products_options_id').val();
 	var formData = parentFrom.serialize();
 	$.ajax({
-		url: '{{ URL::to("admin/deletevalue")}}',
+		url: '{{ URL::to("admin/deletevalue")}}'.replace('http:','https:'),
 		type: "POST",
 		data: formData,
 		success: function (res) {
@@ -329,7 +329,7 @@ $(document).on('click', '#addAttribute', function(e){
 	$("#loader").show();
 	var formData = $('#addattributefrom').serialize();
 	$.ajax({
-		url: '{{ URL::to("admin/addnewproductattribute")}}',
+		url: '{{ URL::to("admin/addnewproductattribute")}}'.replace('http:','https:'),
 		type: "POST",
 		data: formData,
 		success: function (res) {
@@ -362,7 +362,7 @@ $(document).on('click', '#addDefaultAttribute', function(e){
 	$("#loader").show();
 	var formData = $('#adddefaultattributefrom').serialize();
 	$.ajax({
-		url: '{{ URL::to("admin/addnewdefaultattribute")}}',
+		url: '{{ URL::to("admin/addnewdefaultattribute")}}'.replace('http:','https:'),
 		type: "POST",
 		data: formData,
 		success: function (res) {
@@ -394,7 +394,7 @@ $(document).on('change', '#entry_country_id', function(e){
 		
 	var zone_country_id = $(this).val();
 	$.ajax({
-	  url: "{{ URL::to('admin/getZones')}}",
+	  url: "{{ URL::to('admin/getZones')}}".replace('http:','https:'),
 	  dataType: 'json',
 	  type: "post",
 	  data: '&zone_country_id='+zone_country_id,
@@ -419,7 +419,7 @@ $(document).on('click', '#addAddress', function(e){
 	$("#loader").show();
 	var formData = $('#addAddressFrom').serialize();
 	$.ajax({
-		url: '{{ URL::to("admin/addNewCustomerAddress")}}',
+		url: '{{ URL::to("admin/addNewCustomerAddress")}}'.replace('http:','https:'),
 		type: "POST",
 		data: formData,
 		async: false,
@@ -447,7 +447,7 @@ $(document).on('click', '.editAddressModal', function(){
 	var customers_id = $(this).attr('customers_id');
 	var address_book_id = $(this).attr('address_book_id');
 	$.ajax({
-		url: "{{ URL::to('admin/editAddress')}}",
+		url: "{{ URL::to('admin/editAddress')}}".replace('http:','https:'),
 		type: "POST",
 		data: '&customers_id='+customers_id+'&address_book_id='+address_book_id,
 		success: function (data) {
@@ -467,7 +467,7 @@ $(document).on('click', '.editproductattributemodal', function(){
 	var language_id = $(this).attr('language_id');	
 	var options_id = $(this).attr('options_id');
 	$.ajax({
-		url: '{{ URL::to("admin/editproductattribute")}}',
+		url: '{{ URL::to("admin/editproductattribute")}}'.replace('http:','https:'),
 		type: "POST",
 		data: '&products_id='+products_id+'&products_attributes_id='+products_attributes_id+'&language_id='+language_id+'&options_id='+options_id,
 		success: function (data) {
@@ -485,7 +485,7 @@ $(document).on('click', '.editdefaultattributemodal', function(){
 	var language_id = $(this).attr('language_id');
 	var options_id = $(this).attr('options_id');
 	$.ajax({
-		url: "{{ URL::to('admin/editdefaultattribute')}}",
+		url: "{{ URL::to('admin/editdefaultattribute')}}".replace('http:','https:'),
 		type: "POST",
 		data: '&products_id='+products_id+'&products_attributes_id='+products_attributes_id+'&language_id='+language_id+'&options_id='+options_id,
 		success: function (data) {
@@ -501,7 +501,7 @@ $(document).on('click', '#updateAddress', function(e){
 		$("#loader").show();
 		var formData = $('#editAddressFrom').serialize();
 		$.ajax({
-			url: "{{ URL::to('admin/updateAddress')}}",
+			url: "{{ URL::to('admin/updateAddress')}}".replace('http:','https:'),
 			type: "POST",
 			data: formData,
 			success: function (res) {
@@ -535,7 +535,7 @@ $(document).on('click', '#updateAddress', function(e){
 		$("#loader").show();
 		var formData = $('#editAttributeFrom').serialize();
 		$.ajax({
-			url: '{{ URL::to("admin/updateproductattribute")}}',
+			url: '{{ URL::to("admin/updateproductattribute")}}'.replace('http:','https:'),
 			type: "POST",
 			data: formData,
 			success: function (res) {
@@ -566,7 +566,7 @@ $(document).on('click', '#updateAddress', function(e){
 		$("#loader").show();
 		var formData = $('#editDefaultAttributeFrom').serialize();
 		$.ajax({
-			url: "{{ URL::to('admin/updatedefaultattribute')}}",
+			url: "{{ URL::to('admin/updatedefaultattribute')}}".replace('http:','https:'),
 			type: "POST",
 			data: formData,
 			success: function (res) {
@@ -614,7 +614,7 @@ $(document).on('click', '#updateAddress', function(e){
 		var formData = $('#deleteAddress').serialize();
 		console.log(formData);
 		$.ajax({
-			url: "{{ URL::to('admin/deleteAddress')}}",
+			url: "{{ URL::to('admin/deleteAddress')}}".replace('http:','https:'),
 			type: "POST",
 			data: formData,
 			success: function (res) {
@@ -652,7 +652,7 @@ $(document).on('click', '#updateAddress', function(e){
 		var products_id = $(this).attr('products_id');
 		var products_attributes_id = $(this).attr('products_attributes_id');
 		$.ajax({
-			url: "{{ URL::to('admin/deleteproductattributemodal')}}",
+			url: "{{ URL::to('admin/deleteproductattributemodal')}}".replace('http:','https:'),
 			type: "POST",
 			data: '&products_id='+products_id+'&products_attributes_id='+products_attributes_id,
 			success: function (data) {
@@ -669,7 +669,7 @@ $(document).on('click', '#updateAddress', function(e){
 		var products_id = $(this).attr('products_id');
 		var products_attributes_id = $(this).attr('products_attributes_id');
 		$.ajax({
-			url: "{{ URL::to('admin/deleteproductattributemodal')}}",
+			url: "{{ URL::to('admin/deleteproductattributemodal')}}".replace('http:','https:'),
 			type: "POST",
 			data: '&products_id='+products_id+'&products_attributes_id='+products_attributes_id,
 			success: function (data) {
@@ -685,7 +685,7 @@ $(document).on('click', '#updateAddress', function(e){
 		var products_id = $(this).attr('products_id');
 		var products_attributes_id = $(this).attr('products_attributes_id');
 		$.ajax({
-			url: "{{ URL::to('admin/deletedefaultattributemodal')}}",
+			url: "{{ URL::to('admin/deletedefaultattributemodal')}}".replace('http:','https:'),
 			type: "POST",
 			data: '&products_id='+products_id+'&products_attributes_id='+products_attributes_id,
 			success: function (data) {
@@ -701,7 +701,7 @@ $(document).on('click', '#updateAddress', function(e){
 		$("#loader").show();
 		var option_id = $(this).attr('option_id');
 		$.ajax({
-			url: "{{ URL::to('admin/checkattributeassociate')}}",
+			url: "{{ URL::to('admin/checkattributeassociate')}}".replace('http:','https:'),
 			type: "POST",
 			data: '&option_id='+option_id,
 			success: function (res) {
@@ -727,7 +727,7 @@ $(document).on('click', '#updateAddress', function(e){
 		var delete_language_id = $(this).attr('language_id');
 		//alert(delete_language_id);
 		$.ajax({
-			url: "{{ URL::to('admin/checkvalueassociate')}}",
+			url: "{{ URL::to('admin/checkvalueassociate')}}".replace('http:','https:'),
 			type: "POST",
 			data: '&value_id='+value_id,
 			success: function (res) {
@@ -755,7 +755,7 @@ $(document).on('click', '#updateAddress', function(e){
 		var formData = $('#deleteattributeform').serialize();
 		console.log(formData);
 		$.ajax({
-			url: "{{ URL::to('admin/deleteproductattribute')}}",
+			url: "{{ URL::to('admin/deleteproductattribute')}}".replace('http:','https:'),
 			type: "POST",
 			data: formData,
 			success: function (res) {
@@ -791,7 +791,7 @@ $(document).on('click', '#updateAddress', function(e){
 		var formData = $('#deletedefaultattributeform').serialize();
 		console.log(formData);
 		$.ajax({
-			url: "{{ URL::to('admin/deletedefaultattribute')}}",
+			url: "{{ URL::to('admin/deletedefaultattribute')}}".replace('http:','https:'),
 			type: "POST",
 			data: formData,
 			success: function (res) {
@@ -823,7 +823,7 @@ $(document).on('click', '#updateAddress', function(e){
 		$("#loader").show();
 		var formData = new FormData($('#addImageFrom')[0]);
 		$.ajax({
-			url: '{{ URL::to("admin/addnewproductimage")}}',
+			url: '{{ URL::to("admin/addnewproductimage")}}'.replace('http:','https:'),
 			type: "POST",
 			data: formData,
 			success: function (res) {
@@ -856,7 +856,7 @@ $(document).on('click', '#updateAddress', function(e){
 		//$('.applied_message').attr('hidden','hidden');
 		var theme_id = $(this).val();
 		$.ajax({
-			url: '{{ URL::to("admin/updateWebTheme")}}',
+			url: '{{ URL::to("admin/updateWebTheme")}}'.replace('http:','https:'),
 			type: "POST",
 			data: '&theme_id='+theme_id,
 			success: function (data) {
@@ -874,7 +874,7 @@ $(document).on('click', '#updateAddress', function(e){
 		var id = $(this).attr('id');
 		var products_id = $(this).attr('products_id');
 		$.ajax({
-			url: '{{ URL::to("admin/editproductimage")}}',
+			url: '{{ URL::to("admin/editproductimage")}}'.replace('http:','https:'),
 			type: "POST",
 			data: '&products_id='+products_id+'&id='+id,
 			success: function (data) {
@@ -890,7 +890,7 @@ $(document).on('click', '#updateAddress', function(e){
 		$("#loader").show();
 		var formData = new FormData($('#editImageFrom')[0]);
 		$.ajax({
-			url: "{{ URL::to('admin/updateproductimage')}}",
+			url: "{{ URL::to('admin/updateproductimage')}}".replace('http:','https:'),
 			type: "POST",
 			data: formData,
 			success: function (res) {
@@ -924,7 +924,7 @@ $(document).on('click', '#updateAddress', function(e){
 		var formData = new FormData($(this)[0]);
 		
 		$.ajax({
-			url: "{{ URL::to('admin/notifyUser')}}",
+			url: "{{ URL::to('admin/notifyUser')}}".replace('http:','https:'),
 			type: "POST",
 			data: formData,
 			contentType: false,       // The content type used when sending data to the server.
@@ -952,7 +952,7 @@ $(document).on('click', '#updateAddress', function(e){
 		var formData = new FormData($('#sendNotificaionForm')[0]);
 		
 		$.ajax({
-			url: "{{ URL::to('admin/notifyUser')}}",
+			url: "{{ URL::to('admin/notifyUser')}}".replace('http:','https:'),
 			type: "POST",
 			data: formData,
 			contentType: false,       // The content type used when sending data to the server.
@@ -985,7 +985,7 @@ $(document).on('click', '#updateAddress', function(e){
 		var formData = new FormData($(this)[0]);
 		
 		$.ajax({
-			url: "{{ URL::to('admin/notifyUser')}}",
+			url: "{{ URL::to('admin/notifyUser')}}".replace('http:','https:'),
 			type: "POST",
 			data: formData,
 			//contentType: true,       // The content type used when sending data to the server.
@@ -1009,7 +1009,7 @@ $(document).on('click', '#updateAddress', function(e){
 		var id = $(this).attr('id');
 		var products_id = $(this).attr('products_id');
 		$.ajax({
-			url: '{{ URL::to("admin/deleteproductimagemodal")}}',
+			url: '{{ URL::to("admin/deleteproductimagemodal")}}'.replace('http:','https:'),
 			type: "POST",
 			data: '&products_id='+products_id+'&id='+id,
 			success: function (data) {
@@ -1025,7 +1025,7 @@ $(document).on('click', '#updateAddress', function(e){
 		$("#loader").show();
 		var formData = $('#deleteImageForm').serialize();
 		$.ajax({
-			url: "{{ URL::to('admin/deleteproductimage')}}",
+			url: "{{ URL::to('admin/deleteproductimage')}}".replace('http:','https:'),
 			type: "POST",
 			data: formData,
 			success: function (res) {
@@ -1053,7 +1053,7 @@ $(document).on('click', '#updateAddress', function(e){
 	$(document).on('click', '#notification-popup', function(){
 		var customers_id = $(this).attr('customers_id');
 		$.ajax({
-			url: '{{ URL::to("admin/customerNotification")}}',
+			url: '{{ URL::to("admin/customerNotification")}}'.replace('http:','https:'),
 			type: "POST",
 			data: '&customers_id='+customers_id,
 			success: function (data) {
@@ -1068,7 +1068,7 @@ $(document).on('click', '#updateAddress', function(e){
 	$(document).on('focus', '.couponProdcuts input', function(){
 		var products = $(this).attr('products_id');
 		$.ajax({
-			url: "{{URL::to('admin/couponProducts')}}",
+			url: "{{URL::to('admin/couponProducts')}}".replace('http:','https:'),
 			type: "POST",
 			data: '',
 			success: function (data) {
@@ -1228,7 +1228,7 @@ $(document).on('click', '#updateAddress', function(e){
 			dateRange = dateRange.replace(/-/g , "_");
 			dateRange = dateRange.replace(/\//g , "-");
 			dateRange = dateRange.replace(/ /g , "");
-			window.location="{{URL::to('admin/dashboard/dateRange=')}}"+dateRange;
+			window.location="{{URL::to('admin/dashboard/dateRange=')}}".replace('http:','https:')+dateRange;
 		}else{
 			$('.dateRange').parent('.input-group').addClass('has-error');
 		}
@@ -1238,7 +1238,7 @@ $(document).on('click', '#updateAddress', function(e){
 	$(document).on('click', '.default_method', function(){
 		var shipping_id = $(this).attr('shipping_id');
 		$.ajax({
-			url: '{{ URL::to("admin/defaultShippingMethod")}}',
+			url: '{{ URL::to("admin/defaultShippingMethod")}}'.replace('http:','https:'),
 			type: "POST",
 			data: '&shipping_id='+shipping_id,
 			success: function (data) {
@@ -1300,7 +1300,7 @@ $(document).on('click', '#updateAddress', function(e){
 	$(document).on('click', '.default_language', function(){
 		var languages_id = $(this).val();
 		$.ajax({
-			url: '{{ URL::to("admin/defaultLanguage")}}',
+			url: '{{ URL::to("admin/defaultLanguage")}}'.replace('http:','https:'),
 			type: "POST",
 			data: '&languages_id='+languages_id,
 			success: function (data) {
@@ -1314,7 +1314,7 @@ $(document).on('click', '#updateAddress', function(e){
 	
 function getOptions(languages_id) {
 	$.ajax({
-		url: '{{ URL::to("admin/getOptions")}}',
+		url: '{{ URL::to("admin/getOptions")}}'.replace('http:','https:'),
 		type: "POST",
 		data: '&languages_id='+languages_id,
 		success: function (data) {
@@ -1327,7 +1327,7 @@ function getOptions(languages_id) {
 function getOptionsValue(option_id) {
 	var language_id = $('.language_id').val();
 	$.ajax({
-		url: '{{ URL::to("admin/getOptionsValue")}}',
+		url: '{{ URL::to("admin/getOptionsValue")}}'.replace('http:','https:'),
 		type: "POST",
 		data: '&option_id='+option_id+'&language_id='+language_id,
 		success: function (data) {
@@ -1338,7 +1338,7 @@ function getOptionsValue(option_id) {
 
 function getEditOptions(languages_id) {
 	$.ajax({
-		url: '{{ URL::to("admin/getOptions")}}',
+		url: '{{ URL::to("admin/getOptions")}}'.replace('http:','https:'),
 		type: "POST",
 		data: '&languages_id='+languages_id,
 		success: function (data) {
@@ -1352,7 +1352,7 @@ function getEditOptionsValue(option_id) {
 	
 	var language_id = $('.edit_language_id').val();
 	$.ajax({
-		url: '{{ URL::to("admin/getOptionsValue")}}',
+		url: '{{ URL::to("admin/getOptionsValue")}}'.replace('http:','https:'),
 		type: "POST",
 		data: '&option_id='+option_id+'&language_id='+language_id,
 		success: function (data) {
@@ -1363,7 +1363,7 @@ function getEditOptionsValue(option_id) {
 
 function getAdditionalOptions(languages_id) {
 	$.ajax({
-		url: '{{ URL::to("admin/getOptions")}}',
+		url: '{{ URL::to("admin/getOptions")}}'.replace('http:','https:'),
 		type: "POST",
 		data: '&languages_id='+languages_id,
 		success: function (data) {
@@ -1377,7 +1377,7 @@ function getAdditionalOptionsValue(option_id) {
 	
 	var language_id = $('.additional_language_id').val();
 	$.ajax({
-		url: '{{ URL::to("admin/getOptionsValue")}}',
+		url: '{{ URL::to("admin/getOptionsValue")}}'.replace('http:','https:'),
 		type: "POST",
 		data: '&option_id='+option_id+'&language_id='+language_id,
 		success: function (data) {
@@ -1388,7 +1388,7 @@ function getAdditionalOptionsValue(option_id) {
 
 function getEditAdditionalOptions(languages_id) {
 	$.ajax({
-		url: '{{ URL::to("admin/getOptions")}}',
+		url: '{{ URL::to("admin/getOptions")}}'.replace('http:','https:'),
 		type: "POST",
 		data: '&languages_id='+languages_id,
 		success: function (data) {
@@ -1402,7 +1402,7 @@ function getEditAdditionalOptionsValue(option_id) {
 	
 	var language_id = $('.edit_additional_language_id').val();
 	$.ajax({
-		url: '{{ URL::to("admin/getOptionsValue")}}',
+		url: '{{ URL::to("admin/getOptionsValue")}}'.replace('http:','https:'),
 		type: "POST",
 		data: '&option_id='+option_id+'&language_id='+language_id,
 		success: function (data) {
@@ -1419,7 +1419,7 @@ function getEditAdditionalOptionsValue(option_id) {
 function getSubCategory() {
 	/*
 	@if(Request::path() == 'admin/addProduct')
-	 	var getCategories =	'{{ URL::to("admin/getajaxcategories")}}';
+	 	var getCategories =	'{{ URL::to("admin/getajaxcategories")}}'.replace('http:','https:');
 	 
 	@else*/
 		var getCategories = '{{ URL::to("admin/getajaxcategories")}}'.replace('http:','https:');
@@ -1636,7 +1636,7 @@ $(document).on('click', '#generate-key', function(e){
 	$("#loader").show();
 	$('#generateSuccessfully').attr('hidden', 'hidden')
 	$.ajax({
-		url: '{{ URL::to("admin/generateKey")}}',
+		url: '{{ URL::to("admin/generateKey")}}'.replace('http:','https:'),
 		type: "GET",
 		async: false,
 		success: function (res) {

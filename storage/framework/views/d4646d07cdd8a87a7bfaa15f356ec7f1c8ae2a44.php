@@ -56,18 +56,6 @@
             <?php endif; ?>                 
        
         <?php else: ?>
-          <?php echo $__env->make('common.header_two', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-            <?php if(Request::path() == 'index' or Request::path() == '/'): ?>
-            <section class="carousel-content">
-              <div class="container">
-                <div class="row">
-                  <div class="col-12 col-lg-9 p-0"> <?php echo $__env->make('common.carousel', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> </div>
-                  <div class="col-12 col-lg-3 p-0"> <?php echo $__env->make('common.offers', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> </div>
-                </div>
-              </div>
-            </section>
-            <?php endif; ?>
-<!-- 
        		<?php echo $__env->make('common.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
             <?php if(Request::path() == 'index' or Request::path() == '/'): ?>
             <section class="carousel-content">
@@ -78,7 +66,7 @@
                 </div>
               </div>
             </section>
-            <?php endif; ?> -->
+            <?php endif; ?>
         <?php endif; ?>
 	<!-- ./end of header -->
         
