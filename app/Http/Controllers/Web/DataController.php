@@ -118,8 +118,14 @@ class DataController extends Controller
 		
 		$result['popularCategories'] = $categoriesContent;		
 		$result['setting'] = DB::table('settings')->get();
+
+		//set session logo image and app name
+		foreach($result['setting'] as $setting){
+			if($setting->name == 'website_logo' && $setting->value != null) session(['website_logo' => $setting->value]);
+			if($setting->name == 'app_name' && $setting->value != null) session(['app_name' => $setting->value]);
+		}
 		
-		
+
 		$result['pages'] = DB::table('pages')
 							->leftJoin('pages_description', 'pages_description.page_id', '=', 'pages.page_id')
 							->where([['type','2'],['status','1'],['pages_description.language_id',session('language_id')]])->orderBy('pages_description.name', 'ASC')->get();

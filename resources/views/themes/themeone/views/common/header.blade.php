@@ -48,9 +48,15 @@
         	<div class="row align-items-center">
             	<div class="col-12 col-sm-12 col-lg-3 spaceright-0">
                     <a href="{{ URL::to('/')}}" class="logo">
-                    	<!-- <strong>E</strong>COMMERCE -->
-                        <img src="{{asset('').'resources/assets/images/site_images/1543223684.logo.png'}}" alt="shop-noha-logo" class="webiste_logo">
-                        <strong>shop</strong>NoHa
+                    	@if(session('website_logo') != null)
+                        <img src="{{asset('').session('website_logo')}}" alt="shop-noha-logo" class="
+                        webiste_logo">
+                        @endif
+
+                        @if(session('app_name') != null)
+                        {{session('app_name')}}
+                        @else <strong>shop</strong>NoHa
+                        @endif
                     </a>
                 </div>
                 

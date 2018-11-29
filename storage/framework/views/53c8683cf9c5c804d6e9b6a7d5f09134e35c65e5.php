@@ -48,8 +48,19 @@
             <div class="row align-items-center">
                 <div class="col-12  col-sm-12 col-lg-3 spaceright-0">
                     <a href="<?php echo e(URL::to('/')); ?>" class="logo">
-                    	<img src="<?php echo e(asset('').'resources/assets/images/site_images/1543223684.logo.png'); ?>" alt="shop-noha-logo" class="webiste_logo">
-                        <strong>shop</strong>NoHa
+                    	<!-- <img src="<?php echo e(asset('').'resources/assets/images/site_images/1543223684.logo.png'); ?>" alt="shop-noha-logo" class="webiste_logo">
+                        <strong>shop</strong>NoHa -->
+                        
+                        <?php if(session('website_logo') != null): ?>
+                        <img src="<?php echo e(asset('').session('website_logo')); ?>" alt="shop-noha-logo" class="
+                        webiste_logo">
+                        <?php endif; ?>
+
+                        <?php if(session('app_name') != null): ?>
+                        <?php echo e(session('app_name')); ?>
+
+                        <?php else: ?> <strong>shop</strong>NoHa
+                        <?php endif; ?>
                     </a>
                 </div>
                  <div class="col-12 col-sm-7 col-md-8 col-lg-6 px-0">      
