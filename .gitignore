@@ -12,3 +12,4 @@ yarn-error.log
 .env
 /storage
 /storage/framework
+/storage/framework/view/*.php
