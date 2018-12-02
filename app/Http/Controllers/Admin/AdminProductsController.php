@@ -1235,7 +1235,7 @@ class AdminProductsController extends Controller
 			->where('products_options_values_to_products_options.products_options_id','=',$request->delete_products_options_id)->where('products_options_values.language_id','=',$request->delete_language_id)->get();
 			
 		//attributesTable
-		return view("admin.attributestable")->with('attributes', $attributes);
+		return view("admin.attributesTable")->with('attributes', $attributes);
 	}
 	
 	
