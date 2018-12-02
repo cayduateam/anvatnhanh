@@ -18,15 +18,15 @@
   <meta name="ICBM" content="12.238791, 109.196749" />
 
   <meta name="revisit-after" content=" days">
-  <meta name="dc.description" content="<?=stripslashes($result['commonContent']['setting'][75]->value)?>">
-  <meta name="dc.keywords" content="<?=stripslashes($result['commonContent']['setting'][74]->value)?>">
-  <meta name="dc.subject" content="?=stripslashes($result['commonContent']['setting'][73]->value)?>">
+  <meta name="dc.description" content="NhaTrangNet admin">
+  <meta name="dc.keywords" content="NhatrangNet admin">
+  <meta name="dc.subject" content="NhatrangNet admin">
   <meta name="dc.created" content="2018-08-03">
   <meta name="dc.publisher" content="NhaTrangNet">
   <meta name="dc.rights.copyright" content="NhaTrangNet">
   <meta name="dc.creator.name" content="NhaTrangNet">
   <meta name="dc.creator.email" content="cnttnt@gmail.com">
-  <meta name="dc.identifier" content="http://<?=stripslashes($result['commonContent']['setting'][74]->value)?>">
+  <meta name="dc.identifier" content="http://nhatrangnet.net">
   <meta name="dc.language" content="vi-VN">
   
 
