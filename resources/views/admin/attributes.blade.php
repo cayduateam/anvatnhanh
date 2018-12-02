@@ -279,9 +279,6 @@
 
     </div>
 
-    
-
-    <!-- deleteattributeModal -->
 
 	<div class="modal fade" id="deleteValueModal" tabindex="-1" role="dialog" aria-labelledby="deleteValueModalLabel">
 
