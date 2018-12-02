@@ -56,7 +56,7 @@
                         webiste_logo">
                         <?php endif; ?>
 
-                        <?php if(session('app_name') == 1): ?>
+                        <?php if(session('app_name') != null): ?>
                         <?php echo e(session('app_name')); ?>
 
                         <?php else: ?> <?php echo e(config('constant.main.app_name')); ?>

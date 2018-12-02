@@ -1,234 +1,4 @@
-<!-- scripts -->
-<script src="{!! asset('public/js/app.js') !!}"></script>
-<script src="{!! asset('public/js/jquery-ui.js') !!}"></script>
-
-<!-- owl carousel -->
-<script src="{!! asset('public/js/owl.carousel.js') !!}"></script>
-
-<!--- google map-->
-<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&libraries=geometry&key=AIzaSyCQq_d3bPGfsIAlenXUG5RtZsKZKzOmrMw"></script>
-
-<!--- one signal-->
-@if(Request::path() == 'checkout')	
-<!------- //paypal -------->
-
-<script type="text/javascript">
-window.onload = function(e){ 
- 	
-	var paypal_public_key = document.getElementById('paypal_public_key').value;
-	var acount_type = document.getElementById('paypal_environment').value;
-	
-	if(acount_type=='Test'){
-		var paypal_environment = 'sandbox'
-	}else if(acount_type=='Live'){
-		var paypal_environment = 'production'
-	}
-	
-     paypal.Button.render({			
-		env: paypal_environment, // sandbox | production		
-		style: {
-            label: 'checkout',
-            size:  'small',    // small | medium | large | responsive
-            shape: 'pill',     // pill | rect
-            color: 'gold'      // gold | blue | silver | black
-        },
-		
-		// PayPal Client IDs - replace with your own
-		// Create a PayPal app: https://developer.paypal.com/developer/applications/create
-		
-		client: {
-			sandbox:     paypal_public_key,
-			production:  paypal_public_key
-		},
-
-		// Show the buyer a 'Pay Now' button in the checkout flow
-		commit: true,
-
-		// payment() is called when the button is clicked
-		payment: function(data, actions) {
-			var payment_currency = document.getElementById('payment_currency').value;
-			var total_price = '<?php echo number_format((float)$total_price+0, 2, '.', '');?>';
-			
-			// Make a call to the REST api to create the payment
-			return actions.payment.create({
-				payment: {
-					transactions: [
-						{
-							amount: { total: total_price, currency: payment_currency }
-						}
-					]
-				}
-			});
-		},
-
-		// onAuthorize() is called when the buyer approves the payment
-		onAuthorize: function(data, actions) {
-
-			// Make a call to the REST api to execute the payment
-			return actions.payment.execute().then(function() {
-			   	jQuery('#update_cart_form').prepend('<input type="hidden" name="nonce" value='+JSON.stringify(data)+'>');
-				jQuery("#update_cart_form").submit();
-			});
-		}
-
-	}, '#paypal_button');
-};
-</script>
-
-<script src="https://js.braintreegateway.com/js/braintree-2.32.1.min.js"></script> 
-<script type="text/javascript">
-jQuery(document).ready(function(e) {
-	
-	braintree.setup(
-		// Replace this with a client token from your server
-		" <?php print session('braintree_token')?>",
-		"dropin", {
-		container: "payment-form"
-	});
-	
-	 
-});
-</script> 
-
-
-<script src="{!! asset('public/js/stripe_card.js') !!}" data-rel-js></script> 
-
-<script type="application/javascript">
-(function() {
-  'use strict';
-
-  var elements = stripe.elements({
-    fonts: [
-      {
-        cssSrc: 'https://fonts.googleapis.com/css?family=Source+Code+Pro',
-      },
-    ],
-    // Stripe's examples are localized to specific languages, but if
-    // you wish to have Elements automatically detect your user's locale,
-    // use `locale: 'auto'` instead.
-    locale: window.__exampleLocale
-  });
-
-  // Floating labels
-  var inputs = document.querySelectorAll('.cell.example.example2 .input');
-  Array.prototype.forEach.call(inputs, function(input) {
-    input.addEventListener('focus', function() {
-      input.classList.add('focused');
-    });
-    input.addEventListener('blur', function() {
-      input.classList.remove('focused');
-    });
-    input.addEventListener('keyup', function() {
-      if (input.value.length === 0) {
-        input.classList.add('empty');
-      } else {
-        input.classList.remove('empty');
-      }
-    });
-  });
-
-  var elementStyles = {
-    base: {
-      color: '#32325D',
-      fontWeight: 500,
-      fontFamily: 'Source Code Pro, Consolas, Menlo, monospace',
-      fontSize: '16px',
-      fontSmoothing: 'antialiased',
-
-      '::placeholder': {
-        color: '#CFD7DF',
-      },
-      ':-webkit-autofill': {
-        color: '#e39f48',
-      },
-    },
-    invalid: {
-      color: '#E25950',
-
-      '::placeholder': {
-        color: '#FFCCA5',
-      },
-    },
-  };
-
-  var elementClasses = {
-    focus: 'focused',
-    empty: 'empty',
-    invalid: 'invalid',
-  };
-
-  var cardNumber = elements.create('cardNumber', {
-    style: elementStyles,
-    classes: elementClasses,
-  });
-  cardNumber.mount('#example2-card-number');
-
-  var cardExpiry = elements.create('cardExpiry', {
-    style: elementStyles,
-    classes: elementClasses,
-  });
-  cardExpiry.mount('#example2-card-expiry');
-
-  var cardCvc = elements.create('cardCvc', {
-    style: elementStyles,
-    classes: elementClasses,
-  });
-  cardCvc.mount('#example2-card-cvc');
-
-  registerElements([cardNumber, cardExpiry, cardCvc], 'example2');
-})();
-</script> 
-@endif 
-
-<script type="application/javascript">
-
-@if(Request::path() != 'shop')	
-  jQuery(function() {
-    jQuery( "#datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-	  maxDate: '0',
-    });
-  });
-@endif
-
-jQuery( document ).ready( function () {
-	jQuery('#loader').hide();
-	
-	@if($result['commonContent']['setting'][54]->value=='onesignal')
-	 OneSignal.push(function () {
-	  OneSignal.registerForPushNotifications();
-	  OneSignal.on('subscriptionChange', function (isSubscribed) {
-	   if (isSubscribed) {
-		OneSignal.getUserId(function (userId) {
-		 device_id = userId;
-		 //ajax request
-		 jQuery.ajax({
-			url: '{{ URL::to("/subscribeNotification")}}'.replace('http:','https:'),
-			type: "POST",
-			data: '&device_id='+device_id,			
-			success: function (res) {},
-		});
-		 
-		 //$scope.oneSignalCookie();
-		});
-	   }
-	  });
-	
-	 });
-	@endif
-	
-	//load google map
-	@if(Request::path() == 'contact-us')		
-		initialize();
-	@endif	
-	
-	@if(Request::path() == 'checkout')		
-		getZonesBilling();	
-		paymentMethods();
-	@endif
-	
-
+jQuery( document ).ready( function(){
 	$.noConflict();
 	
 	//stripe_ajax
@@ -287,13 +57,8 @@ jQuery( document ).ready( function () {
 	jQuery(document).on('click', '#update_cart', function(e){	
 		jQuery('#loader').css('display','flex');
 		jQuery("#update_cart_form").submit();
-	});	
-	
-	//shipping_data	
-	jQuery(document).on('click', '.shipping_data', function(e){	
-		getZonesBilling();		
-	});	
-	
+	});
+
 	//billling method
 	jQuery(document).on('click', '#same_billing_address', function(e){		
 		if(jQuery(this).prop('checked') == true){
@@ -350,7 +115,7 @@ jQuery( document ).ready( function () {
 		jQuery('#loader').hide();
 		return false;
 	});
-	
+
 	//coupon_code
 	jQuery(document).on('keyup', '#coupon_code', function(e){
 		jQuery("#coupon_error").hide();
@@ -363,50 +128,6 @@ jQuery( document ).ready( function () {
 		}
 		
 	});
-	
-	//test
-	jQuery(document).on('click', '#myFunction', function(e){
-		var message = 'sadsad';		
-		notification(message);
-	});
-
-	@if(!empty($result['detail']['product_data'][0]->attributes))
-		@foreach( $result['detail']['product_data'][0]->attributes as $attributes_data )
-	{{ $attributes_data['option']['name'] }}();
-	
-	function {{ $attributes_data['option']['name'] }}(){
-		var value_price = jQuery('option:selected', ".{{$attributes_data['option']['name']}}").attr('value_price');
-		jQuery("#{{ $attributes_data['option']['name'] }}").val(value_price);
-	}
-		
-	//change_options
-	jQuery(document).on('change', '.{{ $attributes_data['option']['name'] }}', function(e){
-		
-		var {{ $attributes_data['option']['name'] }} = jQuery("#{{ $attributes_data['option']['name'] }}").val();
-		
-		var value_price = jQuery('option:selected', this).attr('value_price');
-		var prefix = jQuery('option:selected', this).attr('prefix');
-		var current_price = jQuery('#products_price').val();
-		
-		if(prefix.trim() == '+' ){
-			var current_price = current_price - {{ $attributes_data['option']['name'] }};
-			var total_price = parseFloat(current_price) + parseFloat(value_price);
-		
-		}else if(prefix.trim() == '-' ){
-			var total_price = current_price - value_price;
-		}
-		
-		jQuery("#{{ $attributes_data['option']['name'] }}").val(value_price);
-		jQuery('#products_price').val(total_price);
-		
-		var qty = jQuery('.qty').val();
-		var products_price = jQuery('#products_price').val();
-		var total_price = qty * products_price;
-		jQuery('.total_price').html('<?=$web_setting[19]->value?>'+total_price.toFixed(2));
-	
-	});
-	@endforeach
-@endif
 
 	//change language
 	function changeLanguage(locale){
@@ -463,8 +184,7 @@ jQuery( document ).ready( function () {
 		}).iconselectmenu("menuWidget").addClass("ui-menu-icons customicons");
 		
   } );
-  
-	jQuery( function() {
+  jQuery( function() {
     	jQuery( "#category_id" ).selectmenu();
 		jQuery( ".attributes_data" ).selectmenu();
 	});
@@ -554,115 +274,7 @@ jQuery( document ).ready( function () {
 		});	
 		
 	});
-	
-	@if(session('direction')=='rtl')
-		var direction = true; 
-	@else
-		var direction = false;
-	@endif
-	//product slider
-	jQuery(".owl_featured").owlCarousel({
-		margin:10,
-		loop:false,
-		nav:true,
-		rtl:direction,
-		responsive:{
-			0:{
-				items:1
-			},
-			576:{
-				items:2
-			},
-			768:{
-				items:3
-			},
-			992:{
-				items:4
-			},
-			1199:{
-				items:5
-			}
-		}
-	});
-	
-
-	jQuery("#owl_special").owlCarousel({
-		loop:false,
-		margin:10,
-		nav:true,
-		rtl:direction,
-		responsive:{
-			0:{
-				items:1
-			},
-			576:{
-				items:2
-			},
-			768:{
-				items:3
-			},
-			992:{
-				items:4
-			},
-			1199:{
-				items:5
-			}
-		}
-	});
-
-	jQuery("#owl_liked").owlCarousel({
-		loop:false,
-		margin:10,
-		nav:true,
-		rtl:direction,
-		responsive:{
-			0:{
-				items:1
-			},
-			576:{
-				items:2
-			},
-			768:{
-				items:3
-			},
-			992:{
-				items:4
-			},
-			1199:{
-				items:5
-			}
-		}
-	});
-	
-	jQuery("#owl_brands").owlCarousel({
-		loop:false,
-		margin:10,
-		nav:true,
-		rtl:direction,
-		responsive:{
-			0:{
-				items:1
-			},
-			576:{
-				items:1
-			},
-			768:{
-				items:3
-			},
-			992:{
-				items:4
-			},
-			1199:{
-				items:6
-			}
-		}
-	});
-
-	jQuery( ".owl-prev").html('<i class="fa fa-angle-left"></i>');
-	jQuery( ".owl-next").html('<i class="fa fa-angle-right"></i>');
-
-
-//change_language
+	//change_language
 jQuery(document).on('click', '.change_language', function(e){
 	jQuery('#loader').css('display','flex');
 	var languages_id = jQuery(this).attr('languages_id');
@@ -834,69 +446,6 @@ jQuery(document).on('click', '#apply_options_btn', function(e){
 	
 })
 
-//add-to-Cart with custom options
-jQuery(document).on('click', '.add-to-Cart', function(e){	
-	jQuery('#loader').css('display','flex');
-	var formData = jQuery("#add-Product-form").serialize();
-	var url = jQuery('#checkout_url').val();
-	var message;
-	jQuery.ajax({
-		url: '{{ URL::to("/addToCart")}}'.replace('http:','https:'),
-		type: "POST",
-		data: formData,
-		
-		success: function (res) {
-			if(res.trim() == "already added"){
-				//notification
-				message = 'Product is added!';
-			}else{
-				jQuery('.head-cart-content').html(res);
-				message = 'Product is added!';
-				jQuery(parent).addClass('active');
-			}
-				if(url.trim()=='true'){
-					window.location.href = '{{ URL::to("/checkout")}}'.replace('http:','https:');
-				}else{
-					jQuery('#loader').css('display','none');
-					//window.location.href = '{{ URL::to("/viewcart")}}';
-					//message = "@lang('website.Product is added')";			
-					//notification(message);
-				}
-		},
-	});
-});
-
-//update-single-Cart with
-jQuery(document).on('click', '.update-single-Cart', function(e){	
-	jQuery('#loader').css('display','flex');
-	var formData = jQuery("#add-Product-form").serialize();
-	var url = jQuery('#checkout_url').val();
-	var message;
-	jQuery.ajax({
-		url: '{{ URL::to("/updatesinglecart")}}'.replace('http:','https:'),
-		type: "POST",
-		data: formData,
-		
-		success: function (res) {
-			if(res.trim() == "already added"){
-				//notification
-				message = 'Product is added!';
-			}else{
-				jQuery('.head-cart-content').html(res);
-				message = 'Product is added!';
-				jQuery(parent).addClass('active');
-			}
-				if(url.trim()=='true'){
-					window.location.href = '{{ URL::to("/checkout")}}'.replace('http:','https:');
-				}else{
-					jQuery('#loader').css('display','none');
-					//window.location.href = '{{ URL::to("/viewcart")}}';
-					//message = "@lang('website.Product is added')";			
-					//notification(message);
-				}
-		},
-	});
-});
 
 //validate form
 
@@ -1081,9 +630,7 @@ jQuery(document).on('keyup focusout', '.email-validate', function(e){
 });
 
 
-	
-
-	//sorting grid/list
+		//sorting grid/list
 	jQuery(document).on('click','#list',function(){		
 		if (!jQuery(this).hasClass('active')) {
 			jQuery('#listing-products, .load-more-area').hide();		
@@ -1170,152 +717,6 @@ jQuery(document).on('keyup focusout', '.email-validate', function(e){
 	});*/
 	
 
-	
-	// This button will increment the value
-	jQuery('.qtyplus').click(function(e){
-		// Stop acting like a button
-		e.preventDefault();
-		// Get the field name
-		fieldName = jQuery(this).attr('field');
-		// Get its current value
-		var currentVal = parseInt(jQuery(this).prev('.qty').val());
-		// If is not undefined
-		if (!isNaN(currentVal)) {
-			@if(!empty($result['detail']['product_data'][0]->products_quantity))				
-			if(currentVal < {{ $result['detail']['product_data'][0]->products_quantity}} ){
-				// Increment
-				jQuery(this).prev('.qty').val(currentVal + 1);					
-			}				
-			@endif
-
-		} else {
-			// Otherwise put a 0 there
-			jQuery(this).prev('.qty').val(0);
-		}
-		
-		var qty = jQuery('.qty').val();
-		var products_price = jQuery('#products_price').val();
-		var total_price = parseFloat(qty) * parseFloat(products_price); 
-		jQuery('.total_price').html('<?=$web_setting[19]->value?>'+total_price.toFixed(2));
-	});
-
-	// This button will decrement the value till 0
-
-	jQuery(".qtyminus").click(function(e) {
-		
-		// Stop acting like a button
-		e.preventDefault();
-		
-		// Get the field name
-		fieldName = jQuery(this).attr('field');
-
-		// Get its current value
-		var currentVal = parseInt(jQuery(this).next('.qty').val());
-		// If it isn't undefined or its greater than 0
-		if (!isNaN(currentVal) && currentVal > 1) {
-			// Decrement one
-			jQuery(this).next('.qty').val(currentVal - 1);
-		} else {
-			
-			// Otherwise put a 0 there
-			jQuery(this).next('.qty').val(1);
-
-		}
-		
-		var qty = jQuery('.qty').val();
-		var products_price = jQuery('#products_price').val();
-		var total_price = parseFloat(qty) * parseFloat(products_price); 
-		jQuery('.total_price').html('<?=$web_setting[19]->value?>'+total_price.toFixed(2));
-
-	});
-
-	
-	//cart page
-	@if( !empty($result['cart']) and count($result['cart']) > 0)
-			@foreach( $result['cart'] as $products)
-	
-	// This button will increment the value
-	jQuery('.qtypluscart_{{$products->customers_basket_id}}').click(function(e){
-		// Stop acting like a button
-		e.preventDefault();
-		// Get the field name
-		fieldName = jQuery(this).attr('field');
-		// Get its current value
-		var currentVal = parseInt(jQuery(this).prev('.qty').val());
-		// If is not undefined
-		if (!isNaN(currentVal)) {				
-			// Increment
-			jQuery(this).prev('.qty').val(currentVal + 1);
-		} else {
-			// Otherwise put a 0 there
-			jQuery(this).prev('.qty').val(0);
-		}
-		
-	});
-
-	// This button will decrement the value till 0
-	jQuery(".qtyminus_{{$products->customers_basket_id}}").click(function(e) {
-		// Stop acting like a button
-		e.preventDefault();
-		// Get the field name
-		fieldName = jQuery(this).attr('field');
-		// Get its current value
-		var currentVal = parseInt(jQuery(this).next('.qty').val());
-		// If it isn't undefined or its greater than 0
-		if (!isNaN(currentVal) && currentVal > 1) {
-			// Decrement one
-			jQuery(this).next('.qty').val(currentVal - 1);
-		} else {
-			// Otherwise put a 0 there
-			jQuery(this).next('.qty').val(1);
-		}
-		
-	});
-
-		@endforeach
-	@endif
-	
-jQuery(document).on('focusout','.qty',function(){
-	var minimum = '1';
-	var maximum = jQuery(this).attr('max');
-	var current = jQuery(this).val();	
-	
-	if( parseInt(current) > parseInt(maximum)){
-		jQuery(this).val(maximum);
-	}
-	
-	if(current<minimum){
-		jQuery(this).val(minimum);
-	}	
-	
-	var products_price = jQuery('#products_price').val();	
-	var total_price = parseFloat(jQuery(this).val()) * parseFloat(products_price);
-	jQuery('.total_price').html('<?=$web_setting[19]->value?>'+total_price.toFixed(2));
-	
-});
-
-	function cart_item_price(){
-		
-		var subtotal = 0;
-		jQuery(".cart_item_price").each(function() {
-			subtotal= parseFloat(subtotal) + parseFloat(jQuery(this).val());				
-		});
-		jQuery('#subtotal').html('<?=$web_setting[19]->value?>'+subtotal);
-		
-		var discount = 0;			
-		jQuery(".discount_price_hidden").each(function() {
-			discount =  parseFloat(discount) - parseFloat(jQuery(this).val());				
-		});
-		
-		jQuery('.discount_price').val(Math.abs(discount));
-		
-		jQuery('#discount').html('<?=$web_setting[19]->value?>'+Math.abs(discount));
-		
-		//total value
-		var total_price = parseFloat(subtotal) - parseFloat(discount);
-		jQuery('#total_price').html('<?=$web_setting[19]->value?>'+total_price);
-	};
-	
 	//default_address
 	jQuery(document).on('click', '.default_address', function(e){
 		jQuery('#loader').css('display','flex');
@@ -1332,9 +733,6 @@ jQuery(document).on('focusout','.qty',function(){
 		});
 
 	});
-
-	
-
 	//deleteMyAddress
 	jQuery(document).on('click', '.deleteMyAddress', function(e){
 		jQuery('#loader').css('display','flex');
@@ -1350,11 +748,10 @@ jQuery(document).on('focusout','.qty',function(){
 		});
 	});
 
-jQuery('.slide-toggle').on('click', function(event){
- jQuery('.color-panel').toggleClass('active');
-});
-
-	 jQuery( function() {		 
+	jQuery('.slide-toggle').on('click', function(event){
+		jQuery('.color-panel').toggleClass('active');
+	});
+	jQuery( function() {		 
 	  var maximum_price = jQuery( ".maximum_price" ).val();
 	  jQuery( "#slider-range" ).slider({
 		range: true,
@@ -1375,199 +772,17 @@ jQuery('.slide-toggle').on('click', function(event){
 	   jQuery( "#min_price_show" ).val( jQuery( "#slider-range" ).slider( "values", 0 ) );	   
 	   jQuery( "#max_price_show" ).val(jQuery( "#slider-range" ).slider( "values", 1 ) );
 	   //jQuery( "#slider-range" ).slider( "option", "max", 50 );
-	 });
-	 
- 	
-		
-
-//tooltip enable
-jQuery(function () {
-  jQuery('[data-toggle="tooltip"]').tooltip()
-});		
-
-function initialize(location){	
-	//var address = 'Faisalabad, Pakistan';
-	var address = '40.730610, -73.935242';
-	var map = new google.maps.Map(document.getElementById('googleMap'), {
-		mapTypeId: google.maps.MapTypeId.TERRAIN,
-		zoom: 13
-	});
-	var geocoder = new google.maps.Geocoder();
-	geocoder.geocode({
-		'address': address
-	}, 
-	function(results, status) {
-		if(status == google.maps.GeocoderStatus.OK) {
-		 new google.maps.Marker({
-			position: results[0].geometry.location,
-			map: map
-		 });
-		 map.setCenter(results[0].geometry.location);
-		}
-	});
-   }
-  
-//default product cart
-jQuery(document).on('click', '.cart', function(e){	
-	var parent = jQuery(this);
-	var products_id = jQuery(this).attr('products_id');
-	var message ;
-	jQuery.ajax({
-		url: '{{ URL::to("/addToCart")}}'.replace('http:','https:'),
-		type: "POST",
-		data: '&products_id='+products_id,		
-		success: function (res) {
-			if(res.trim() == "already added"){							
-			}else{
-				jQuery('.head-cart-content').html(res);				
-				jQuery(parent).removeClass('cart');
-				jQuery(parent).addClass('active');
-				jQuery(parent).html("@lang('website.Added')");
-			}
-			message = "@lang('website.Product is added')";			
-			notification(message);
-		},
 	});
 
-});
+	//tooltip enable
+	jQuery(function () {
+	  jQuery('[data-toggle="tooltip"]').tooltip()
+	});		
 
-   
-   
-});
 
 
-//ready doument end
-jQuery('.dropdown-menu').on('click', function(event){
-	// The event won't be propagated up to the document NODE and 
-	// therefore delegated events won't be fired
-	event.stopPropagation();
-});
-jQuery(".alert.fade").fadeTo(2000, 500).slideUp(500, function(){
-    jQuery(".alert.fade").slideUp(500);
-});
 
-function delete_cart_product(cart_id){
-	jQuery('#loader').css('display','flex');
-	var id = cart_id;
-	jQuery.ajax({
-		url: '{{ URL::to("/deleteCart")}}'.replace('http:','https:'),
-		type: "GET",
-		data: '&id='+id+'&type=header cart',		
-		success: function (res) {
-			window.location.reload(true);
-		},
-	});
-};
-
-//paymentMethods
-function paymentMethods(){
-	//jQuery('#loader').css('display','flex');
-	var payment_method = jQuery(".payment_method:checked").val();
-	jQuery(".payment_btns").hide();
-	
-	jQuery("#"+payment_method+'_button').show();
-	
-	jQuery.ajax({
-		url: '{{ URL::to("/paymentComponent")}}'.replace('http:','https:'),
-		type: "POST",
-		data: '&payment_method='+payment_method,			
-		success: function (res) {
-			//jQuery('#loader').hide();
-		},
-	});
-}
-
-//notification
-function notification(message) {
-	jQuery('#message_content').html(message);
-	var x = document.getElementById("message_content");
-	x.className = "show";
-	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-}
-
-function passwordMatch(){
-	
-	var password = jQuery('#password').val();
-	var re_password = jQuery('#re_password').val();	
-	
-	if(password == re_password){
-		return 'matched';
-	}else{
-		return 'error';
-	}
-}
-
-function getZones() {
-	jQuery('#loader').css('display','flex');
-	var country_id = jQuery('#entry_country_id').val();
-	jQuery.ajax({
-		url: '{{ URL::to("/ajaxZones")}}'.replace('http:','https:'),
-		type: "POST",
-		//data: '&country_id='+country_id,
-		 data: {'country_id': country_id},
-		
-		success: function (res) {
-			var i;
-			var showData = [];
-			for (i = 0; i < res.length; ++i) {
-				var j = i + 1; 
-				showData[i] = "<option value='"+res[i].zone_id+"'>"+res[i].zone_name+"</option>"; 
-			}
-			showData.push("<option value='Other'>@lang('website.Other')</option>");
-			jQuery("#entry_zone_id").html(showData);
-			jQuery('#loader').hide();
-		},
-	});
-
-};
-
-function getBillingZones() {
-	console.log('here');
-	jQuery('#loader').css('display','flex');
-	var country_id = jQuery('#billing_countries_id').val();
-	jQuery.ajax({
-		url: '{{ URL::to("/ajaxZones")}}'.replace('http:','https:'),
-		type: "POST",
-		 data: {'country_id': country_id},
-		
-		success: function (res) {
-			var i;
-			var showData = [];
-			for (i = 0; i < res.length; ++i) {
-				var j = i + 1; 
-				showData[i] = "<option value='"+res[i].zone_id+"'>"+res[i].zone_name+"</option>"; 
-			}
-			showData.push("<option value='Other'>@lang('website.Other')</option>");
-			jQuery("#billing_zone_id").html(showData);
-			jQuery('#loader').hide();
-		},
-	});
-
-};
-
-function getZonesBilling() {
-	var field_name = jQuery('.shipping_data:checked');
-	var mehtod_name = jQuery(field_name).attr('method_name');
-	var shipping_price = jQuery(field_name).attr('shipping_price');
-	jQuery("#mehtod_name").val(mehtod_name);
-	jQuery("#shipping_price").val(shipping_price);
-}
-
-'use strict';
-function showPreview(objFileInput) {
-	if (objFileInput.files[0]) {
-		var fileReader = new FileReader();
-		fileReader.onload = function (e) {
-			jQuery("#uploaded_image").html('<img src="'+e.target.result+'" width="150px" height="150px" class="upload-preview" />');
-			jQuery("#uploaded_image").css('opacity','1.0');
-			jQuery(".upload-choose-icon").css('opacity','0.8');
-		}
-		fileReader.readAsDataURL(objFileInput.files[0]);
-	}
-}
-
-jQuery(document).ready(function() {
-  /******************************
+	/******************************
       BOTTOM SCROLL TOP BUTTON
    ******************************/
 
@@ -1586,7 +801,7 @@ jQuery(document).ready(function() {
       jQuery(scrollTop).css("opacity", "0");
     }
 
-  }); 
+  });
 
   //Click event to scroll to top
   jQuery(scrollTop).click(function() {
@@ -1596,10 +811,8 @@ jQuery(document).ready(function() {
     return false;
 
   });
-});
 
-
-jQuery('body').on('mouseenter mouseleave','.dropdown.open',function(e){
+  jQuery('body').on('mouseenter mouseleave','.dropdown.open',function(e){
   var _d=jQuery(e.target).closest('.dropdown');
   _d.addClass('show');
   setTimeout(function(){
@@ -1623,4 +836,5 @@ jQuery('.nav-index').on('show.bs.tab', function (e) {
 	  e.relatedTarget // previous active tab
 	  jQuery('.overlay').hide();   
 })
-</script>
+
+});

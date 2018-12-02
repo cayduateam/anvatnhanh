@@ -1624,4 +1624,3 @@ jQuery('.nav-index').on('show.bs.tab', function (e) {
 	  jQuery('.overlay').hide();   
 })
 </script>
->>>>

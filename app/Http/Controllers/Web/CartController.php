@@ -1078,7 +1078,9 @@ class CartController extends DataController
 											}else{
 												
 												//if coupon is apply for specific product
-												if(!empty($coupons[0]->product_ids) and in_array($cart->products_id,$coupons[0]->product_ids)){
+												
+												// if(!empty($coupons[0]->product_ids) and in_array($cart->products_id,$coupons[0]->product_ids)){
+												if(!empty($coupons[0]->product_ids) and strpos($cart->products_id,$coupons[0]->product_ids) !== false){
 													
 													$product_price = $cart->final_price - ($coupons[0]->amount/100 * $cart->final_price);
 													if($product_price > $coupons[0]->amount){																													

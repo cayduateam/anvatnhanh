@@ -10,9 +10,31 @@
     @else
     <title><?=stripslashes($result['commonContent']['setting'][72]->value)?></title>
     @endif
-     <meta name="DC.title"  content="<?=stripslashes($result['commonContent']['setting'][73]->value)?>"/>
+    <meta name="DC.title"  content="<?=stripslashes($result['commonContent']['setting'][73]->value)?>"/>
     <meta name="description" content="<?=stripslashes($result['commonContent']['setting'][75]->value)?>"/>
     <meta name="keywords" content="<?=stripslashes($result['commonContent']['setting'][74]->value)?>"/>
+
+    <meta name="copyright" content="NhaTrangNet" />
+    <meta name="author" content="NhaTrangNet" />
+    <meta name="robots" content="index,follow" />
+    <meta http-equiv="content-language" content="vi"/>
+
+    <meta name="geo.region" content="VN" />
+    <meta name="geo.placename" content="Nha Trang" />
+    <meta name="geo.position" content="12.238791;109.196749" />
+    <meta name="ICBM" content="12.238791, 109.196749" />
+
+    <meta name="revisit-after" content=" days">
+    <meta name="dc.description" content="<?=stripslashes($result['commonContent']['setting'][75]->value)?>">
+    <meta name="dc.keywords" content="<?=stripslashes($result['commonContent']['setting'][74]->value)?>">
+    <meta name="dc.subject" content="?=stripslashes($result['commonContent']['setting'][73]->value)?>">
+    <meta name="dc.created" content="2018-08-03">
+    <meta name="dc.publisher" content="NhaTrangNet">
+    <meta name="dc.rights.copyright" content="NhaTrangNet">
+    <meta name="dc.creator.name" content="NhaTrangNet">
+    <meta name="dc.creator.email" content="cnttnt@gmail.com">
+    <meta name="dc.identifier" content="http://<?=stripslashes($result['commonContent']['setting'][74]->value)?>">
+    <meta name="dc.language" content="vi-VN">
 	
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
